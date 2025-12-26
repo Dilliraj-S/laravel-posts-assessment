@@ -1,17 +1,13 @@
-Laravel Practical Assessment
+Laravel Posts Application
 Overview
 
-This project is a small Laravel application built as part of a practical assessment to demonstrate real-world Laravel development skills.
-The focus of this assessment is on Laravel fundamentals, clean code structure, validation, authorization, and best practices, rather than UI design.
+This project is a small Laravel application built as part of a practical assessment to demonstrate real-world Laravel fundamentals, code structure, authorization, validation, and clean development practices.
+
+The application allows authenticated users to manage posts while enforcing proper access control so users can only modify their own content. UI styling is intentionally kept minimal to focus on backend logic and Laravel best practices.
 
 Features
-Authentication
 
-User registration and login implemented using Laravel Breeze
-
-Authentication middleware protects all post-related actions
-
-Posts Module
+User authentication (registration, login, logout)
 
 Authenticated users can:
 
@@ -23,150 +19,131 @@ Edit their own posts
 
 Delete their own posts
 
-Each post contains:
+Authorization enforced using Laravel Policies
 
-Title
+Server-side validation for all form inputs
 
-Description
+Clean MVC structure using Eloquent models
 
-Created timestamp
+MySQL database with migrations
 
-Users cannot edit or delete posts created by other users.
-
-Authorization & Validation
-
-Server-side input validation is enforced using Laravel’s request validation
-
-Authorization is handled using Laravel Policies to ensure users can only modify their own posts
+Simple, custom CSS for basic usability (no UI frameworks)
 
 Tech Stack
 
 Laravel (latest stable version)
 
-PHP
+PHP 8+
 
 MySQL
 
-Blade templates
+Blade Templates
 
-Laravel Breeze for authentication
+Laravel Breeze (authentication scaffolding)
 
 Git for version control
 
-Project Structure
-
-MVC architecture following Laravel best practices
-
-Database schema managed using migrations
-
-Business logic kept inside controllers and policies
-
-Eloquent models used for database interaction
-
 Setup Instructions
-Prerequisites
 
-PHP (8.x recommended)
+Follow these steps to run the project locally:
 
-Composer
+1. Clone the repository
+   git clone <repository-url>
+   cd laravel-posts-assessment
 
-MySQL
+2. Install dependencies
+   composer install
 
-Node.js & npm
+3. Environment setup
 
-Installation Steps
-
-Clone the repository:
-
-git clone <repository-url>
-cd <project-folder>
-
-Install PHP dependencies:
-
-composer install
-
-Install frontend dependencies:
-
-npm install
-npm run build
-
-Create a MySQL database:
-
-CREATE DATABASE laravel_posts_assessment;
-
-Configure environment variables:
+Create a .env file from the example:
 
 cp .env.example .env
 
-Update the .env file with your MySQL credentials:
+Update the database configuration in .env:
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=laravel_posts_assessment
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
+DB_USERNAME=your_mysql_username
+DB_PASSWORD=your_mysql_password
 
-Generate application key:
+Create the database manually in MySQL before running migrations.
 
-php artisan key:generate
+4. Generate application key
+   php artisan key:generate
 
-Run migrations:
+5. Run migrations
+   php artisan migrate
 
-php artisan migrate
-
-Start the development server:
-
-php artisan serve
+6. Serve the application
+   php artisan serve
 
 The application will be available at:
 
 http://127.0.0.1:8000
 
+Application Flow
+
+Unauthenticated users are redirected to the login page
+
+After login or registration, users are redirected to /posts
+
+/posts displays the list of posts
+
+Only the post owner can edit or delete their posts
+
+Authorization is enforced at both controller and policy levels
+
+Authorization & Validation
+
+Authorization is implemented using a dedicated PostPolicy
+
+Edit and delete actions are restricted to the post owner
+
+Input validation is handled server-side using Laravel’s validation features
+
+CSRF protection is enabled by default
+
+UI & Styling
+
+UI is intentionally simple and lightweight
+
+Custom CSS is used instead of Tailwind or other UI frameworks
+
+Focus is on clarity and usability rather than visual design
+
 Assumptions Made
 
-Laravel Breeze was used for authentication for simplicity and reliability
+Laravel Breeze is acceptable for authentication scaffolding
 
-MySQL was chosen to reflect a real-world production setup
+UI design is not the primary evaluation criterion
 
-UI styling was intentionally kept minimal, as UI/UX was not a focus of the assessment
+MySQL is preferred over SQLite for a more production-like setup
 
-Areas for Improvement
+Possible Improvements
 
-With more time, the following enhancements could be added:
+Given more time, the following enhancements could be added:
 
 Pagination for posts listing
 
 Feature and unit tests
 
-Improved UI/UX styling
+Flash success/error notifications
 
-API version of the posts module
+Better UI styling and responsiveness
 
-Role-based permissions (if required)
+API-based implementation for posts
 
 Git Practices
 
-Incremental commits with meaningful commit messages
+Incremental commits with meaningful messages
 
-.env, vendor/, and node_modules/ are excluded using .gitignore
+No sensitive files committed (.env, vendor, node_modules)
 
-Commit history reflects logical development stages
+Clear commit history aligned with feature development
 
 Final Notes
 
-This project focuses on demonstrating:
-
-Strong Laravel fundamentals
-
-Clean and maintainable code
-
-Proper validation and authorization
-
-Thoughtful project structure and documentation
-
-Thank you for reviewing this assessment.
-
-Author
-
-S Dilliraj
+This project focuses on demonstrating clean Laravel fundamentals, proper authorization, validation, and maintainable code structure rather than UI complexity or additional features.
