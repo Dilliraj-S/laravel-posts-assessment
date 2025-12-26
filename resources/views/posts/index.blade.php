@@ -1,55 +1,35 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800">
-                Posts
-            </h2>
-            <a href="{{ route('posts.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-                + New Post
-            </a>
-        </div>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-8 max-w-5xl mx-auto space-y-4">
-        @forelse($posts as $post)
-            <div class="bg-white p-6 rounded shadow">
-                <h3 class="text-lg font-semibold text-gray-900">
-                    {{ $post->title }}
-                </h3>
-
-                <p class="text-gray-600 mt-2">
-                    {{ $post->description }}
-                </p>
-
-                <div class="flex justify-between items-center mt-4 text-sm text-gray-500">
-                    <span>
-                        Created {{ $post->created_at->diffForHumans() }}
-                    </span>
-
-                    <div class="flex space-x-3">
-                        @can('update', $post)
-                            <a href="{{ route('posts.edit', $post) }}" class="text-indigo-600 hover:underline">
-                                Edit
-                            </a>
-                        @endcan
-
-                        @can('delete', $post)
-                            <form method="POST" action="{{ route('posts.destroy', $post) }}"
-                                onsubmit="return confirm('Are you sure?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="text-red-600 hover:underline">
-                                    Delete
-                                </button>
-                            </form>
-                        @endcan
-                    </div>
-                </div>
-            </div>
-        @empty
-            <p class="text-center text-gray-500">
-                No posts available.
-            </p>
-        @endforelse
+@section('content')
+    <div class="header-row">
+        <h2>Posts</h2>
+        <a href="{{ route('posts.create') }}" class="btn btn-primary">+ New Post</a>
     </div>
-</x-app-layout>
+
+    @forelse($posts as $post)
+        <div class="post">
+            <h3>{{ $post->title }}</h3>
+            <p>{{ $post->description }}</p>
+
+            <div class="post-meta">
+                Created {{ $post->created_at->diffForHumans() }}
+            </div>
+
+            <div class="post-actions">
+                @can('update', $post)
+                    <a href="{{ route('posts.edit', $post) }}" class="btn btn-secondary">Edit</a>
+                @endcan
+
+                @can('delete', $post)
+                    <form method="POST" action="{{ route('posts.destroy', $post) }}" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                @endcan
+            </div>
+        </div>
+    @empty
+        <p>No posts available.</p>
+    @endforelse
+@endsection
